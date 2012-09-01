@@ -282,7 +282,7 @@ component XmlReader {
 		}
 
 		if (!StructKeyExists(local, "instance")) {
-			Throw(type = "cflow.validation", message = "Invalid rule '#arguments.node.xmlName#'");
+			Throw(type = "cvalid", message = "Invalid rule '#arguments.node.xmlName#'");
 		}
 
 		// tell the rule how to obtain the value to test

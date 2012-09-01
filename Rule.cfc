@@ -22,14 +22,14 @@ component Rule {
 	 * Tests the rule for the given data struct. If the rule passes, returns true, otherwise false.
 	 **/
 	public boolean function test(required struct data) {
-		Throw(type = "cflow.notimplemented", message = "Not implemented");
+		Throw(type = "cvalid", message = "Not implemented");
 	}
 
 	/**
 	 * Returns the script that performs the test on the client-side.
 	 **/
 	public string function script() {
-		Throw(type = "cflow.notimplemented", message = "Not implemented");
+		Throw(type = "cvalid", message = "Not implemented");
 	}
 
 	public void function setField(required string fieldName) {

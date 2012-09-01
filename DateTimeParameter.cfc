@@ -64,7 +64,7 @@ component DateTimeParameter {
 			variables.increment = Val(sign & incrementUnit);
 		} else {
 			Throw(
-				type = "cflow.validation",
+				type = "cvalid",
 				message = "Expression '#local.expression#' is not a valid date/time expression",
 				detail = "If you pass in date literals, use slashes as the datepart separator"
 			);

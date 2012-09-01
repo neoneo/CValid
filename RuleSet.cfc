@@ -39,7 +39,7 @@ component RuleSet {
 	public void function addRuleSet(required RuleSet ruleSet) {
 
 		if (ArrayIsEmpty(variables.rules)) {
-			Throw(type = "cflow.validation", message = "At least one rule must exist before a ruleset can be added");
+			Throw(type = "cvalid", message = "At least one rule must exist before a ruleset can be added");
 		}
 		// put the rule set on the last array item
 		variables.rules[ArrayLen(variables.rules)].set = arguments.ruleSet;
