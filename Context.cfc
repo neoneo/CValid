@@ -35,8 +35,8 @@ component Context {
 		return new RuleSet();
 	}
 
-	public EachRuleSet function createEachRuleSet(boolean aggregate = false) {
-		return new EachRuleSet(aggregate);
+	public EachRuleSet function createEachRuleSet(boolean distinct = false) {
+		return new EachRuleSet(arguments.distinct);
 	}
 
 	// GENERAL RULES ------------------------------------------------------------------------------

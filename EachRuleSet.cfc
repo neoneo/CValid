@@ -19,8 +19,8 @@
  **/
 component EachRuleSet extends="RuleSet" {
 
-	public void function init(boolean aggregate = false) {
-		variables.aggregate = arguments.aggregate;
+	public void function init(boolean distinct = false) {
+		variables.distinct = arguments.distinct;
 	}
 
 	public void function setField(required string fieldName) {
@@ -44,7 +44,7 @@ component EachRuleSet extends="RuleSet" {
 			// if a ValidRule is tested, and passed, the value may have been converted
 			// write the value back to the set; if the set was already an array before it was passed in here, the converted value goes back to the caller
 			set[i] = transport[variables.fieldName];
-			if (variables.aggregate) {
+			if (variables.distinct) {
 				// only include distinct messages
 				for (var message in result) {
 					if (ArrayFind(messages, message) == 0) {
