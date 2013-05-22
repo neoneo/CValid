@@ -55,15 +55,15 @@ component XmlReader {
 			if (StructKeyExists(ruleSetNode.xmlAttributes, "field")) {
 				fieldName = ruleSetNode.xmlAttributes.field;
 			}
-			var passed = []; // array of rule set names to pass before this rule set is processed
-			if (StructKeyExists(ruleSetNode.xmlAttributes, "passed")) {
-				passed = ListToArray(ruleSetNode.xmlAttributes.passed);
+			var pass = []; // array of rule set names to pass before this rule set is processed
+			if (StructKeyExists(ruleSetNode.xmlAttributes, "pass")) {
+				pass = ListToArray(ruleSetNode.xmlAttributes.pass);
 			}
 
 			var ruleSet = variables.context.createRuleSet();
 			createRulesFromChildNodes(ruleSetNode, ruleSet, fieldName);
 
-			validator.addRuleSet(ruleSet, ruleSetName, fieldName, passed);
+			validator.addRuleSet(ruleSet, ruleSetName, fieldName, pass);
 		}
 
 	}

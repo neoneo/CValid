@@ -23,9 +23,9 @@ component Evaluator {
 		result = ReplaceList(result, " eq , lt , lte , gt , gte , neq , not , and , or , mod ", " == , < , <= , > , >= , != , !, && , || , % ");
 		// interpret remaining alphanumeric terms without a parenthesis as a field name (which will be available in arguments.data)
 		// explanation:
-		// before the variable name there must be a space, or one of ( , + - * / & ^ = < > ! | %
+		// before the variable name there must be a space, or one of ( , + - * / & ^ = < > ! | % [ ]
 		// the variable name must be followed by one of those characters, except (, and including . )
-		result = REReplaceNoCase(result, "([ (,+*/&^=<>!|%-])([a-z_]+[a-z0-9_]*)([ )\.,+*/&^=<>!|%-])", "\1arguments.data.\2\3", "all");
+		result = REReplaceNoCase(result, "([ (,+*/&^=<>!|%[\]-])([a-z_]+[a-z0-9_]*)(?=[ )\.,+*/&^=<>!|%[\]-])", "\1arguments.data.\2", "all");
 
 		variables.expression = Trim(result);
 

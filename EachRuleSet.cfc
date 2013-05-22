@@ -38,6 +38,7 @@ component EachRuleSet extends="RuleSet" {
 		for (var element in set) {
 			// replace the field with the element
 			transport[variables.fieldName] = element;
+			transport._ = i; // make the index available to the rules
 			// call the super method, so the element is tested against the rules
 			var result = super.validate(transport);
 			// if a ValidRule is tested, and passed, the value may have been converted

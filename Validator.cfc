@@ -19,7 +19,7 @@ component Validator {
 	variables.ruleSets = {};
 	variables.names = [];
 
-	public void function addRuleSet(required RuleSet ruleSet, required string name, string fieldName = "", array mustPass = []) {
+	public void function addRuleSet(required RuleSet ruleSet, required string name, string fieldName = "", array pass = []) {
 
 		local.fieldName = arguments.fieldName;
 		if (Len(local.fieldName) == 0) {
@@ -29,7 +29,7 @@ component Validator {
 		variables.ruleSets[arguments.name] = {
 			instance = arguments.ruleSet,
 			field = local.fieldName,
-			mustPass = arguments.mustPass
+			pass = arguments.pass
 		};
 		ArrayAppend(variables.names, arguments.name);
 
@@ -42,11 +42,11 @@ component Validator {
 		for (var name in variables.names) {
 			var info = variables.ruleSets[name];
 			// check if there are other rule sets that must have been passed successfully
-			var perform = ArrayIsEmpty(info.mustPass);
+			var perform = ArrayIsEmpty(info.pass);
 			if (!perform) {
-				// rule sets in the mustPass array must have been passed (and therefore tested)
+				// rule sets in the pass array must have been passed (and therefore tested)
 				perform = true;
-				for (var name in info.mustPass) {
+				for (var name in info.pass) {
 					if (!result.isPassed(name)) {
 						perform = false;
 						break;
