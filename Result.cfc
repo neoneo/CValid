@@ -16,7 +16,7 @@
 
 component Result {
 
-	variables.messages = collection(); // we use an argument collection, because it keeps the order of the keys that are added
+	variables.messages = CreateObject("java", "java.util.LinkedHashMap").init();
 	variables.passed = true;
 
 	public void function addMessages(required string name, required array messages) {
@@ -38,12 +38,23 @@ component Result {
 
 	}
 
-	public boolean function isPassed(string name) {
+	public boolean function isPassed(string name, numeric index) {
 
 		var passed = variables.passed;
 		if (StructKeyExists(arguments, "name")) {
 			// the rules must have been tested (so the struct key exists), and must have resulted in 0 messages
-			passed = StructKeyExists(variables.messages, arguments.name) && ArrayIsEmpty(variables.messages[arguments.name]);
+			passed = false;
+			if (StructKeyExists(variables.messages, arguments.name)) {
+				// the rules were tested
+				var messages = variables.messages[arguments.name];
+				if (!StructKeyExists(arguments, "index")) {
+					// regular array of messages; passed if empty
+					passed = ArrayIsEmpty(messages);
+				} else {
+					// we expect an array of arrays; passed if the parent array is empty or the child array is empty
+					passed = ArrayIsEmpty(messages) || ArrayIsEmpty(messages[arguments.index]);
+				}
+			}
 		}
 
 		return passed;
@@ -53,20 +64,14 @@ component Result {
 		return StructKeyArray(variables.messages);
 	}
 
-	public array function getMessages(required string name) {
+	public array function getMessages(required string name, numeric index) {
 
-		var messages = JavaCast("null", 0);
-		if (StructKeyExists(variables.messages, arguments.name)) {
-			messages = variables.messages[arguments.name];
-		} else {
-			messages = [];
+		var messages = StructKeyExists(variables.messages, arguments.name) ? variables.messages[arguments.name] : [];
+		if (StructKeyExists(arguments, "index") && !ArrayIsEmpty(messages)) {
+			messages = messages[arguments.index];
 		}
 
 		return messages;
-	}
-
-	private array function collection() {
-		return arguments;
 	}
 
 }

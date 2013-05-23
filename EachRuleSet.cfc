@@ -19,8 +19,9 @@
  **/
 component EachRuleSet extends="RuleSet" {
 
-	public void function init(boolean distinct = false) {
-		variables.distinct = arguments.distinct;
+	public void function init(boolean merge = false, string index = "") {
+		variables.merge = arguments.merge;
+		variables.index = arguments.index;
 	}
 
 	public void function setField(required string fieldName) {
@@ -31,6 +32,7 @@ component EachRuleSet extends="RuleSet" {
 
 		var messages = [];
 		var set = toArray(arguments.data[variables.fieldName]);
+		var passed = true;
 
 		// create a copy of the data that we can modify
 		var transport = StructCopy(arguments.data);
@@ -38,40 +40,42 @@ component EachRuleSet extends="RuleSet" {
 		for (var element in set) {
 			// replace the field with the element
 			transport[variables.fieldName] = element;
-			transport._ = i; // make the index available to the rules
+			if (Len(variables.index) > 0) {
+				transport[variables.index] = i; // make the index available to the rules
+			}
 			// call the super method, so the element is tested against the rules
 			var result = super.validate(transport);
 			// if a ValidRule is tested, and passed, the value may have been converted
 			// write the value back to the set; if the set was already an array before it was passed in here, the converted value goes back to the caller
 			set[i] = transport[variables.fieldName];
-			if (variables.distinct) {
+			if (variables.merge) {
 				// only include distinct messages
 				for (var message in result) {
 					if (ArrayFind(messages, message) == 0) {
 						ArrayAppend(messages, message);
 					}
 				}
+				passed = ArrayIsEmpty(messages);
 			} else {
 				// put the results on the messages array unmodified
 				// so the result is an array within an array
 				ArrayAppend(messages, result);
+				// now that the messages array is no longer empty, we keep a separate boolean to track if all rules have passed
+				passed = passed && ArrayIsEmpty(result);
 			}
 			i++;
 		}
+		if (passed && !variables.merge) {
+			// messages is an array of empty arrays, so we return an empty array to signify all rules have passed
+			ArrayClear(messages);
+		} 
 
 		return messages;
 	}
 
+
 	private array function toArray(required any value) {
-
-		var result = JavaCast("null", 0);
-		if (IsArray(arguments.value)) {
-			result = arguments.value;
-		} else {
-			result = ListToArray(arguments.value);
-		}
-
-		return result;
+		return IsArray(arguments.value) ? arguments.value : ListToArray(arguments.value);
 	}
 
 }

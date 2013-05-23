@@ -117,9 +117,10 @@ component XmlReader {
 				// create a RuleSet or an EachRuleSet
 				// an EachRuleSet is a RuleSet that tests its rules against all elements in a given set, as opposed to only a single value
 				if (ruleNode.xmlName == "each") {
-					// check the distinct attribute
-					var distinct = StructKeyExists(ruleNode.xmlAttributes, "distinct") ? ruleNode.xmlAttributes.distinct : false;
-					local.ruleSet = variables.context.createEachRuleSet(distinct);
+					// check the merge attribute
+					var merge = StructKeyExists(ruleNode.xmlAttributes, "merge") ? ruleNode.xmlAttributes.merge : false;
+					var index = StructKeyExists(ruleNode.xmlAttributes, "index") ? ruleNode.xmlAttributes.index : "";
+					local.ruleSet = variables.context.createEachRuleSet(merge, index);
 					// the EachRuleSet needs the field name to access the set to test against
 					local.ruleSet.setField(arguments.fieldName);
 				} else {
@@ -201,7 +202,7 @@ component XmlReader {
 				instance = variables.context.createSupersetRule(xmlAttributes.set, caseSensitive);
 				break;
 
-			case "distinct":
+			case "merge":
 				instance = variables.context.createDistinctRule(caseSensitive);
 				break;
 
