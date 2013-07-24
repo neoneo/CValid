@@ -49,6 +49,9 @@ component DateTimeParameter {
 		} else {
 			variables.date = date;
 			variables.evaluate = true;
+			if (ListFind("now,today,year,quarter1,quarter2,quarter3,quarter4", date) == 0) {
+				variables.evaluator = new Evaluator(date);
+			}
 		}
 
 		var partCount = ListLen(local.expression, "+-");
@@ -106,7 +109,7 @@ component DateTimeParameter {
 
 				default:
 					// variables.date contains a variable name
-					value = arguments.data[variables.date]; // this should already be a valid date
+					value = variables.evaluator.execute(arguments.data); // this should already be a valid date
 					break;
 			}
 		} else {

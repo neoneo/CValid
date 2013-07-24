@@ -21,11 +21,12 @@ component RuleSet {
 	/**
 	 * Adds a Rule to the RuleSet.
 	 **/
-	public void function addRule(required Rule rule, string message = "", string mask = "") {
+	public void function addRule(required Rule rule, string message = "", string unless = "", string mask = "") {
 
 		ArrayAppend(variables.rules, {
 			instance = arguments.rule,
 			message = arguments.message,
+			unless = Len(arguments.unless) > 0 ? new Evaluator(arguments.unless) : NullValue(),
 			silent = Len(arguments.message) == 0,
 			mask = arguments.mask
 		});
@@ -51,8 +52,10 @@ component RuleSet {
 		var messages = []; // collection of error messages
 
 		for (var rule in variables.rules) {
-			if (rule.instance.test(arguments.data)) {
-				// the rule is passed; if there is a rule set, validate its rules
+			var passed = rule.instance.test(arguments.data);
+			// if the rule is passed, proceed with child rules
+			if (passed) {
+				// if there is a rule set, validate its rules
 				if (StructKeyExists(rule, "set")) {
 					// concatenate any resulting messages on the current messages array
 					var result = rule.set.validate(arguments.data);
@@ -62,7 +65,7 @@ component RuleSet {
 				}
 			} else {
 				// not passed; ignore this fact if the rule is silent
-				if (!rule.silent) {
+			if (!rule.silent && (!StructKeyExists(rule, "unless") || !rule.unless.execute(arguments.data))) {
 					var message = rule.message;
 					if (message contains "__") {
 						// the parameter value must be inserted at the spot indicated by the underscores

@@ -77,15 +77,9 @@ component XmlReader {
 		for (var ruleNode in ruleNodes) {
 			var xmlAttributes = ruleNode.xmlAttributes;
 
-			var message = "";
-			if (StructKeyExists(xmlAttributes, "message")) {
-				message = xmlAttributes.message;
-				silent = false;
-			}
-			var mask = "";
-			if (StructKeyExists(xmlAttributes, "mask")) {
-				mask = xmlAttributes.mask;
-			}
+			var message = StructKeyExists(xmlAttributes, "message") ? xmlAttributes.message : "";
+			var unless = StructKeyExists(xmlAttributes, "unless") ? xmlAttributes.unless : "";
+			var mask = StructKeyExists(xmlAttributes, "mask") ? xmlAttributes.mask : "";
 
 			var rule = createRuleFromNode(ruleNode, arguments.fieldName, local.datatype);
 
@@ -111,7 +105,7 @@ component XmlReader {
 				}
 			}
 
-			arguments.ruleSet.addRule(rule, message, mask);
+			arguments.ruleSet.addRule(rule, message, unless, mask);
 			if (!ArrayIsEmpty(ruleNode.xmlChildren)) {
 				// this rule has child rules, to be tested when the rule passes
 				// create a RuleSet or an EachRuleSet
@@ -271,7 +265,7 @@ component XmlReader {
 				// create an instance of the component, and pass all attributes as arguments except the default attributes
 				var argumentCollection = {};
 				// workaround for Railo bug 1798, can't use StructCopy to copy xml structs
-				var fixedAttributes = ["message", "component", "field", "mask"];
+				var fixedAttributes = ["message", "component", "field", "mask", "unless"];
 				for (var attribute in xmlAttributes) {
 					if (ArrayFind(fixedAttributes, attribute) == 0) {
 						argumentCollection[attribute] = xmlAttributes[attribute];
