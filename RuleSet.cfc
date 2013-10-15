@@ -65,7 +65,7 @@ component RuleSet {
 				}
 			} else {
 				// not passed; ignore this fact if the rule is silent
-			if (!rule.silent && (!StructKeyExists(rule, "unless") || !rule.unless.execute(arguments.data))) {
+				if (!rule.silent && (!StructKeyExists(rule, "unless") || !rule.unless.execute(arguments.data))) {
 					var message = rule.message;
 					if (message contains "__") {
 						// the parameter value must be inserted at the spot indicated by the underscores

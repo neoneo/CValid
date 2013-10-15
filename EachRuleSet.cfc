@@ -68,14 +68,22 @@ component EachRuleSet extends="RuleSet" {
 		if (passed && !variables.merge) {
 			// messages is an array of empty arrays, so we return an empty array to signify all rules have passed
 			ArrayClear(messages);
-		} 
+		}
 
 		return messages;
 	}
 
 
 	private array function toArray(required any value) {
-		return IsArray(arguments.value) ? arguments.value : ListToArray(arguments.value);
+
+		if (IsArray(arguments.value)) {
+			return arguments.value;
+		} else if (IsSimpleValue(arguments.value)) {
+			return ListToArray(arguments.value);
+		} else {
+			Throw("Cannot convert value to array");
+		}
+
 	}
 
 }

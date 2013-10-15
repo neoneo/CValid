@@ -196,7 +196,7 @@ component XmlReader {
 				instance = variables.context.createSupersetRule(xmlAttributes.set, caseSensitive);
 				break;
 
-			case "merge":
+			case "distinct":
 				instance = variables.context.createDistinctRule(caseSensitive);
 				break;
 
