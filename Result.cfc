@@ -74,4 +74,10 @@ component Result {
 		return messages;
 	}
 
+	public void function merge(required Result result) {
+		for (var name in arguments.result.getNames()) {
+			addMessages(name, arguments.result.getMessages(name));
+		}
+	}
+
 }
