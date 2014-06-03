@@ -56,7 +56,7 @@ component Validator {
 
 			if (perform) {
 				var messages = info.instance.validate(arguments.data);
-				result.addMessages(info.field, messages);
+				result.addMessages(name, messages);
 			}
 		}
 
