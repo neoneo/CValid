@@ -23,13 +23,17 @@ component RuleSet {
 	 **/
 	public void function addRule(required Rule rule, string message = "", string unless = "", string mask = "") {
 
-		ArrayAppend(variables.rules, {
+		var rule = {
 			instance = arguments.rule,
 			message = arguments.message,
-			unless = Len(arguments.unless) > 0 ? new Evaluator(arguments.unless) : NullValue(),
 			silent = Len(arguments.message) == 0,
 			mask = arguments.mask
-		});
+		}
+		if (Len(arguments.unless) > 0) {
+			rule.unless = new Evaluator(arguments.unless);
+		}
+
+		ArrayAppend(variables.rules, rule);
 
 	}
 
