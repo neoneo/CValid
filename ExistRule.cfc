@@ -17,7 +17,15 @@
 component ExistRule extends="Rule" {
 
 	public boolean function test(required struct data) {
-		return StructKeyExists(arguments.data, variables.fieldName);
+		// return StructKeyExists(arguments.data, variables.fieldName);
+		// TODO: find a better way to test for deep existence
+		try {
+			Evaluate("arguments.data.#variables.fieldName#");
+		} catch (Expression e) {
+			return false;
+		}
+
+		return true;
 	}
 
 	public string function script() {

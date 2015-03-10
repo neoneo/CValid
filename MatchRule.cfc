@@ -21,7 +21,7 @@ component MatchRule extends="Rule" {
 	}
 
 	public boolean function test(required struct data) {
-		return IsValid("regex", arguments.data[variables.fieldName], variables.pattern);
+		return IsValid("regex", getValue(arguments.data), variables.pattern);
 	}
 
 	public string function script() {

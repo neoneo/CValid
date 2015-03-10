@@ -31,7 +31,7 @@ component EachRuleSet extends="RuleSet" {
 	public array function validate(required struct data) {
 
 		var messages = [];
-		var set = toArray(arguments.data[variables.fieldName]);
+		var set = toArray(Evaluate("arguments.data.#variables.fieldName#"));
 		var passed = true;
 
 		// create a copy of the data that we can modify
@@ -39,7 +39,7 @@ component EachRuleSet extends="RuleSet" {
 		var i = 1;
 		for (var element in set) {
 			// replace the field with the element
-			transport[variables.fieldName] = element;
+			"transport.#variables.fieldName#" = element;
 			if (Len(variables.index) > 0) {
 				transport[variables.index] = i; // make the index available to the rules
 			}
@@ -47,7 +47,7 @@ component EachRuleSet extends="RuleSet" {
 			var result = super.validate(transport);
 			// if a ValidRule is tested, and passed, the value may have been converted
 			// write the value back to the set; if the set was already an array before it was passed in here, the converted value goes back to the caller
-			set[i] = transport[variables.fieldName];
+			set[i] = Evaluate("transport.#variables.fieldName#");
 			if (variables.merge) {
 				// only include distinct messages
 				for (var message in result) {
