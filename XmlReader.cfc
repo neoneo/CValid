@@ -22,11 +22,10 @@ component XmlReader {
 
 	public void function read(required string path) {
 
-		var absolutePath = ExpandPath(arguments.path);
-		var list = DirectoryList(absolutePath, true, "name", "*.xml");
+		var list = DirectoryList(ExpandPath(arguments.path), true, "path", "*.xml");
 
 		for (var name in list) {
-			readFile(absolutePath & "/" & name);
+			readFile(name);
 		}
 
 	}
