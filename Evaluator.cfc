@@ -26,6 +26,8 @@ component Evaluator {
 		// before the variable name there must be a space, or one of ( , + - * / & ^ = < > ! | % [ ]
 		// the variable name must be followed by one of those characters, except (, and including . )
 		result = REReplaceNoCase(result, "([ (,+*/&^=<>!|%[\]-])([a-z_]+[a-z0-9_]*)(?=[ )\.,+*/&^=<>!|%[\]-])", "\1arguments.data.\2", "all");
+		// revert operators that have no alphanumeric counterpart
+		result = REReplaceNoCase(result, "arguments\.data\.(xor|eqv|imp|contains)", "\1", "all");
 
 		variables.expression = Trim(result);
 
