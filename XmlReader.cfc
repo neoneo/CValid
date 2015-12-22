@@ -16,8 +16,12 @@
 
 component XmlReader {
 
-	public void function init(required Context context) {
+	public void function init(required Context context, any beanFactory) {
 		variables.context = arguments.context;
+
+		if (StructKeyExists(arguments, "beanFactory")) {
+			variables.beanFactory = arguments.beanFactory;
+		}
 	}
 
 	public void function read(required string path) {
@@ -261,18 +265,29 @@ component XmlReader {
 				break;
 
 			case "rule":
-				// create an instance of the component, and pass all attributes as arguments except the default attributes
-				var argumentCollection = {};
-				// workaround for Railo bug 1798, can't use StructCopy to copy xml structs
-				var fixedAttributes = ["message", "component", "field", "mask", "unless"];
-				for (var attribute in xmlAttributes) {
-					if (ArrayFind(fixedAttributes, attribute) == 0) {
-						argumentCollection[attribute] = xmlAttributes[attribute];
+				// If a rule has a beanName specified, get that bean from the provided bean factory.
+				// This assumes the bean factory has a method getBean().
+				if (StructKeyExists(xmlAttributes, "beanname")) {
+					if (!StructKeyExists(variables, "beanFactory")) {
+						Throw(type = "cvalid", message = "Bean factory does not exist");
 					}
-				}
-				instance = new "#xmlAttributes.component#"(argumentCollection = argumentCollection);
-				break;
 
+					instance = variables.beanFactory.getBean(xmlAttributes.beanname);
+				} else {
+					// create an instance of the component, and pass all attributes as arguments except the default attributes
+					var argumentCollection = {};
+					// workaround for Railo bug 1798, can't use StructCopy to copy xml structs
+					var fixedAttributes = ["message", "component", "field", "mask", "unless"];
+					for (var attribute in xmlAttributes) {
+						if (ArrayFind(fixedAttributes, attribute) == 0) {
+							argumentCollection[attribute] = xmlAttributes[attribute];
+						}
+					}
+
+					instance = new "#xmlAttributes.component#"(argumentCollection = argumentCollection);
+				}
+
+				break;
 		}
 
 		if (!StructKeyExists(local, "instance")) {
