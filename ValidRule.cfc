@@ -31,8 +31,6 @@ component ValidRule extends="Rule" {
 			case "integer":
 				if (LSIsNumeric(value)) {
 					value = LSParseNumber(value);
-				} else if (IsNumeric(value)) {
-					value = Val(value);
 				}
 				result = StructKeyExists(local, "value") && IsValid(variables.type, value);
 				if (result) {
@@ -55,9 +53,6 @@ component ValidRule extends="Rule" {
 				if (LSIsDate(value)) {
 					result = true;
 					value = LSParseDateTime(value);
-				} else if (IsDate(value)) {
-					result = true;
-					value = ParseDateTime(value);
 				}
 				if (result) {
 					"arguments.data.#variables.fieldName#" = value;
