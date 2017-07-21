@@ -31,18 +31,4 @@ component ContainRule extends="StringRule" {
 		return result;
 	}
 
-	public string function script() {
-
-		var comparison = variables.caseSensitive ? "value.indexOf(parameterValue)" : "value.toLowerCase().indexOf(parameterValue.toLowerCase())";
-
-		return "
-			function (data) {
-				var value = data.#variables.fieldName#;
-				var parameterValue = (#variables.parameter.script()#)(data);
-
-				return #comparison# > -1;
-			}
-		";
-	}
-
 }

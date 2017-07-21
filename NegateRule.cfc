@@ -24,13 +24,4 @@ component NegateRule extends="Rule" {
 		return !variables.rule.test(arguments.data);
 	}
 
-	public string function script() {
-
-		return "
-			function (data) {
-				return !(#variables.rule.script()#)(data);
-			}
-		";
-	}
-
 }

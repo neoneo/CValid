@@ -37,29 +37,4 @@ component SetParameter extends="Parameter" {
 		return value;
 	}
 
-	public string function script() {
-
-		var result = "";
-		if (variables.evaluate) {
-			result = super.script();
-		} else {
-			var expression = "";
-			if (IsArray(variables.value)) {
-				// convert the array to a Javascript array literal
-				expression = SerializeJSON(variables.value);
-			} else {
-				// the value is a comma separated list
-				expression = """" & Replace(variables.value, """", "\""", "all") & """" & ".split("","")";
-			}
-
-			result = "
-				function (data) {
-					return #expression#;
-				}
-			";
-		}
-
-		return result;
-	}
-
 }

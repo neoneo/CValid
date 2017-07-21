@@ -23,12 +23,4 @@ component SubsetRule extends="SetRule" {
 		return isSubset(toArray(getValue(arguments.data)), getParameterValue(arguments.data));
 	}
 
-	public string function script() {
-		return "
-			function (data) {
-				return this.isSubset(data.#variables.fieldName#, (#variables.parameter.script()#)(data));
-			}
-		";
-	}
-
 }

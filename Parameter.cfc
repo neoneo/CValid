@@ -49,22 +49,4 @@ component Parameter {
 		return variables.evaluate ? variables.evaluator.execute(arguments.data) : variables.value;
 	}
 
-	public string function script() {
-
-		var expression = "";
-		if (variables.evaluate) {
-			// Javascript has no arguments scope like ColdFusion
-			expression = Replace(variables.evaluator.getExpression(), "arguments.", "", "all");
-		} else {
-			// produce a string literal
-			expression = """" & Replace(variables.value, """", "\""", "all") & """";
-		}
-
-		return "
-			function (data) {
-				return #expression#;
-			}
-		";
-	}
-
 }

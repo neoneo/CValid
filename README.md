@@ -1,10 +1,6 @@
 CValid
 ======
 
-ColdFusion / Javascript validation framework
+ColdFusion validation framework
 
 Documentation: https://github.com/neoneo/CValid/wiki
-
-Todo:
-----
-* finish javascript implementation

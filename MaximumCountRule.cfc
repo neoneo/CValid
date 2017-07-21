@@ -20,12 +20,4 @@ component MaximumCountRule extends="NumericRule" {
 		return ArrayLen(toArray(getValue(arguments.data))) <= getParameterValue(arguments.data);
 	}
 
-	public string function script() {
-		return "
-			function (data) {
-				return data.#variables.fieldName#.length <= (#variables.parameter.script()#)(data).length;
-			}
-		";
-	}
-
 }

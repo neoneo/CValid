@@ -20,12 +20,4 @@ component NumericParameter extends="Parameter" {
 		return Val(super.getValue(arguments.data));
 	}
 
-	public string function script() {
-		return variables.evaluate ? super.script() : "
-			function (data) {
-				return #variables.value#;
-			}
-		";
-	}
-
 }

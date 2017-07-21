@@ -24,12 +24,4 @@ component MaximumNumericRule extends="NumericRule" {
 		return value <= compareValue;
 	}
 
-	public string function script() {
-		return "
-			function (data) {
-				return data.#variables.fieldName# <= (#variables.parameter.script()#)(data);
-			}
-		";
-	}
-
 }

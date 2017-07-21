@@ -28,12 +28,4 @@ component ExistRule extends="Rule" {
 		return true;
 	}
 
-	public string function script() {
-		return "
-			function (data) {
-				return typeof data.#variables.fieldName# !== ""undefined"";
-			}
-		";
-	}
-
 }

@@ -20,12 +20,4 @@ component NonEmptyRule extends="Rule" {
 		return Len(getValue(arguments.data)) > 0;
 	}
 
-	public string function script() {
-		return "
-			function (data) {
-				return data.#variables.fieldName#.length > 0;
-			}
-		";
-	}
-
 }

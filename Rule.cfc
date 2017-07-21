@@ -25,13 +25,6 @@ component Rule {
 		Throw(type = "cvalid", message = "Not implemented");
 	}
 
-	/**
-	 * Returns the script that performs the test on the client-side.
-	 **/
-	public string function script() {
-		Throw(type = "cvalid", message = "Not implemented");
-	}
-
 	public void function setField(required string fieldName) {
 		variables.fieldName = arguments.fieldName;
 	}

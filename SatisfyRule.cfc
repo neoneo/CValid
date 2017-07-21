@@ -24,16 +24,4 @@ component SatisfyRule extends="Rule" {
 		return variables.evaluator.execute(arguments.data);
 	}
 
-	public string function script() {
-
-		// assume the expression used by the evaluator is correct Javascript
-		var expression = Replace(variables.evaluator.getExpression(), "arguments.", "", "all");
-
-		return "
-			function (data) {
-				return #expression#;
-			}
-		";
-	}
-
 }
