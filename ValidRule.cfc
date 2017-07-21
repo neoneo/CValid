@@ -34,7 +34,7 @@ component ValidRule extends="Rule" {
 				}
 				result = StructKeyExists(local, "value") && IsValid(variables.type, value);
 				if (result) {
-					"arguments.data.#variables.fieldName#" = value;
+					"arguments.data._cvalid.#variables.fieldName#" = value;
 				}
 				break;
 
@@ -55,7 +55,7 @@ component ValidRule extends="Rule" {
 					value = LSParseDateTime(value);
 				}
 				if (result) {
-					"arguments.data.#variables.fieldName#" = value;
+					"arguments.data._cvalid.#variables.fieldName#" = value;
 				}
 				break;
 

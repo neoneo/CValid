@@ -30,7 +30,7 @@ component Rule {
 	}
 
 	private any function getValue(required struct data) {
-		return Evaluate("arguments.data.#variables.fieldName#");
+		return Evaluate("arguments.data._cvalid.#variables.fieldName# ?: arguments.data.#variables.fieldName#");
 	}
 
 	// this method is included for cases where the tested value is a set

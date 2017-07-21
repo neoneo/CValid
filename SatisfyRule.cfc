@@ -16,8 +16,15 @@
 
 component SatisfyRule extends="Rule" {
 
-	public void function init(required string condition) {
-		variables.evaluator = new Evaluator(arguments.condition);
+	public void function init(required any condition) {
+		if (IsSimpleValue(arguments.condition)) {
+			variables.evaluator = new Evaluator(arguments.condition);
+		} else {
+			// condition should be a function.
+			variables.evaluator = {
+				execute: arguments.condition
+			}
+		}
 	}
 
 	public boolean function test(required struct data) {

@@ -66,7 +66,7 @@ component XmlReader {
 			var ruleSet = variables.context.createRuleSet();
 			createRulesFromChildNodes(ruleSetNode, ruleSet, fieldName);
 
-			validator.addRuleSet(ruleSet, ruleSetName, fieldName, pass);
+			validator.addRuleSet(ruleSet, ruleSetName, pass);
 		}
 
 	}

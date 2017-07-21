@@ -19,16 +19,10 @@ component Validator {
 	variables.ruleSets = {};
 	variables.names = [];
 
-	public void function addRuleSet(required RuleSet ruleSet, required string name, string fieldName = "", array pass = []) {
-
-		local.fieldName = arguments.fieldName;
-		if (Len(local.fieldName) == 0) {
-			local.fieldName = arguments.name;
-		}
+	public void function addRuleSet(required RuleSet ruleSet, required string name, array pass = []) {
 
 		variables.ruleSets[arguments.name] = {
 			instance = arguments.ruleSet,
-			field = local.fieldName,
 			pass = arguments.pass
 		};
 		ArrayAppend(variables.names, arguments.name);
@@ -59,6 +53,8 @@ component Validator {
 				result.addMessages(name, messages);
 			}
 		}
+		// Remove the temporary data structure, introduced by a ValidRule.
+		StructDelete(arguments.data, "_cvalid");
 
 		return result;
 	}
