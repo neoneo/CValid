@@ -27,8 +27,8 @@ component ValidRule extends="Rule" {
 
 		switch (variables.type) {
 
-			case "numeric":
 			case "integer":
+			case "numeric":
 				if (LSIsNumeric(value)) {
 					value = LSParseNumber(value);
 				}
@@ -38,11 +38,12 @@ component ValidRule extends="Rule" {
 				}
 				break;
 
-			case "guid":
 			case "boolean":
-			case "email":
-			case "url":
 			case "creditcard":
+			case "email":
+			case "guid":
+			case "string":
+			case "url":
 				result = IsValid(variables.type, value);
 				break;
 
