@@ -22,6 +22,10 @@ component Context {
 		return variables.validators[arguments.name];
 	}
 
+	public boolean function hasValidator(required string name) {
+		return StructKeyExists(variables.validators, arguments.name);
+	}
+
 	// FACTORY METHODS ============================================================================
 
 	public Validator function createValidator(required string name) {
