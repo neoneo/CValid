@@ -19,7 +19,7 @@
  **/
 component SetRule extends="Rule" {
 
-	public void function init(required string value, boolean caseSensitive = false) {
+	public void function init(required any value, boolean caseSensitive = false) {
 		variables.parameter = new SetParameter(arguments.value);
 		variables.caseSensitive = arguments.caseSensitive;
 	}

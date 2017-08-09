@@ -125,28 +125,24 @@ component Context {
 
 	// SET RULES ----------------------------------------------------------------------------------
 
-	public ElementRule function createElementRule(required string value, boolean caseSensitive = false) {
+	public ElementRule function createElementRule(required any value, boolean caseSensitive = false) {
 		return new ElementRule(arguments.value, arguments.caseSensitive);
 	}
 
-	public EqualSetRule function createEqualSetRule(required string value, boolean caseSensitive = false) {
+	public EqualSetRule function createEqualSetRule(required any value, boolean caseSensitive = false) {
 		return new EqualSetRule(arguments.value, arguments.caseSensitive);
 	}
 
-	public IntersectionRule function createIntersectionRule(required string value, boolean caseSensitive = false) {
+	public IntersectionRule function createIntersectionRule(required any value, boolean caseSensitive = false) {
 		return new IntersectionRule(arguments.value, arguments.caseSensitive);
 	}
 
-	public SubsetRule function createSubsetRule(required string value, boolean caseSensitive = false) {
+	public SubsetRule function createSubsetRule(required any value, boolean caseSensitive = false) {
 		return new SubsetRule(arguments.value, arguments.caseSensitive);
 	}
 
-	public SupersetRule function createSupersetRule(required string value, boolean caseSensitive = false) {
+	public SupersetRule function createSupersetRule(required any value, boolean caseSensitive = false) {
 		return new SupersetRule(arguments.value, arguments.caseSensitive);
-	}
-
-	public ValidSetRule function createValidSetRule(required string type) {
-		return new ValidSetRule(arguments.type);
 	}
 
 	public MinimumCountRule function createMinimumCountRule(required string value) {
