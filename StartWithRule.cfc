@@ -21,7 +21,7 @@ component StartWithRule extends="StringRule" {
 		var compareValue = getParameterValue(arguments.data);
 		var value = Left(getValue(arguments.data), Len(compareValue));
 
-		return compareValues(value, parameterValue);
+		return compareValues(value, compareValue);
 	}
 
 }
