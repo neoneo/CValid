@@ -45,9 +45,8 @@ component EachRuleSet extends="RuleSet" {
 			}
 			// call the super method, so the element is tested against the rules
 			var result = super.validate(transport);
-			// if a ValidRule is tested, and passed, the value may have been converted
-			// write the value back to the set; if the set was already an array before it was passed in here, the converted value goes back to the caller
-			set[i] = Evaluate("transport.#variables.fieldName#");
+			// Remove the temporary struct, to prevent use of it in subsequent iterations.
+			StructDelete(transport, "_cvalid");
 			if (variables.merge) {
 				// only include distinct messages
 				for (var message in result) {
